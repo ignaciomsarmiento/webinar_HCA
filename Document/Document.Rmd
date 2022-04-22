@@ -1,0 +1,64 @@
+---
+title: "Webinar HCA"
+author: "Ignacio Sarmiento Barbieri"
+date: '2022-04-21'
+output:
+  html_document: default
+  word_document: default
+---
+
+
+# Introducción a la reproducción
+
+En este documento voy a reproducir DJ (1995) y correr la regresion:
+
+
+$$
+ln(y_{T+t})-ln(y_t)=\alpha + \beta ln(y_t) + \epsilon_i 
+$$
+
+# Datos
+
+```{r echo=FALSE}
+dta<-read.csv("~/Desktop/webinar_HCA/data/raw/oecd_data.csv")
+head(dta)
+```
+
+Ahora quiero correr la regresion
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+
+
+dta<- dta %>% mutate(ln_gdp85=log(GDP85),
+                     ln_gdp60=log(GDP60),
+                     Delta_gdp=ln_gdp85-ln_gdp60
+                     )
+
+reg1<-lm(Delta_gdp~ln_gdp60,data=dta)
+summary(reg1)
+```
+
+
+```{r}
+plot(dta$ln_gdp60,dta$Delta_gdp)
+abline(reg1)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
